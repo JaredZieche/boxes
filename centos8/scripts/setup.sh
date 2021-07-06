@@ -17,3 +17,4 @@ sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashi
 sudo yum install terraform -y
 sudo yum install packer -y
 sudo yum install vault -y
+sudo yum install ansible -y

@@ -1,0 +1,7 @@
+- name: "include tasks for setup on {{ ansible_facts['os_family'] }}"
+  include_tasks: 
+    file: "{{ ansible_facts['os_family'] }}.yml"
+
+- name: run preferred dotfile configurations
+  include_tasks:
+    file: dotfiles.yml
