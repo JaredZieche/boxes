@@ -1,0 +1,48 @@
+{
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "../scripts/root_setup.sh"
+      ],
+      "override": {
+        "vmware-iso": {
+          "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'"
+        }
+      }
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "../scripts/setup.sh"
+      ]
+    }
+  ],
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us <wait>",
+        "hostname={{ .Name }} <wait>",
+        "fb=false debconf/frontend=noninteractive <wait>",
+        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false <wait>",
+        "initrd=/install/initrd.gz -- <enter><wait>"
+      ],
+      "boot_wait": "4s",
+      "http_directory": "http",
+      "iso_checksum": "14f73c93f75e873f4ac70b6cddc83703755c2421135a8fbbfd6ccfeed107e971",
+      "iso_url": "linuxmint-20.1-cinnamon-64bit.iso",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
+      "headless": false,
+      "tools_upload_flavor": "linux",
+      "vm_name": "mint20_1"
+    }
+  ],
+  "post-processors": ["vagrant"]
+}

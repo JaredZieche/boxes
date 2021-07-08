@@ -1,0 +1,37 @@
+# VA Cert Setup
+curl http://nexus.dev8.bip.va.gov/repository/raw-dependencies/va-certificates/va-certs-rhel.sh | bash
+# SSM Agent Install
+curl https://nexus.dev8.bip.va.gov/repository/raw-dependencies/amazon/ssm-install.sh | bash
+# Yum Stuff
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum-config-manager --setopt="docker-ce-stable.baseurl=https://download.docker.com/linux/centos/7/x86_64/stable" --save
+yum update -y
+yum install -y \
+	docker-ce docker-ce-cli containerd.io \
+	nano vim sshpass 
+# Install AWS CLI v2
+curl -k "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" 
+unzip awscli-bundle.zip 
+./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+rm -rf awscli-bundle*
+# Install yq
+wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.6.2/yq_linux_amd64
+chmod +x /usr/local/bin/yq
+# Install jq
+wget -qO /usr/local/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+chmod +x /usr/local/bin/jq
+# Install ansible
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org ansible
+# Install helm2
+wget -qO- https://get.helm.sh/helm-v2.17.0-linux-amd64.tar.gz | tar xzvf -
+mv linux-amd64/{helm,tiller} /usr/local/bin/ && rm -rf linux-amd64
+# Install helm3
+wget -qO- https://get.helm.sh/helm-v3.5.3-linux-amd64.tar.gz | tar xzvf -
+mv linux-amd64/helm /usr/local/bin/helm3 && rm -rf linux-amd64
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl && mv kubectl /usr/local/bin/
+# Install Hub
+wget https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz | tar xzvf -
+cd hub-linux-amd64-2.14.2
+./install && cd .. && rm -rf hub-linux-amd64

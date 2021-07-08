@@ -1,4 +1,3 @@
-#!javascript
 #!/bin/bash
 set -e
 # Updating and Upgrading dependencies

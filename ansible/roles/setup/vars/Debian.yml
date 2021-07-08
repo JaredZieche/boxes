@@ -1,4 +1,4 @@
-yum_repos:
+repos:
   - name: kubernetes
     baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
     gpgkey:
@@ -10,7 +10,7 @@ yum_repos:
   - name: epel
     baseurl: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
     gpgkey:
-yum_packages:
+packages:
     - curl
     - wget
     - git

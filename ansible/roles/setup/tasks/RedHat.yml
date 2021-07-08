@@ -1,4 +1,13 @@
+- name: add required yum repos
+  yum_repository:
+    name: "{{ item.name }}"
+    baseurl: "{{ item.baseurl }}"
+    file: external_repos
+    gpgkey: "{{ item.gpgkey | default(omit) }}"
+  loop: "{{ yum_repos }}"
+
 - name: install required packages
-  dnf:
+  yum:
     state: latest
-    packages: "{{ packages }}"
+    name: "{{ yum.packages }}"
+    enablerepo: "{{ yum_repos }}"

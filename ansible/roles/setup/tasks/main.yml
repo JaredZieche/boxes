@@ -1,7 +1,11 @@
+- name: "include {{ ansible_facts['os_family'] }} vars"
+  include_vars:
+    file: "{{ ansible_facts['os_family'] }}"
+
 - name: "include tasks for setup on {{ ansible_facts['os_family'] }}"
   include_tasks: 
     file: "{{ ansible_facts['os_family'] }}.yml"
 
-- name: run preferred dotfile configurations
+- name: install awscli
   include_tasks:
-    file: dotfiles.yml
+    file: awscli.yml
