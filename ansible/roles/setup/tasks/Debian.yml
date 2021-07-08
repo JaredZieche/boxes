@@ -6,3 +6,4 @@
 - name: add apt packages
   apt:
     name: "{{ packages }}"
+    state: present
