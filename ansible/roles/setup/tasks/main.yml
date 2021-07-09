@@ -1,11 +1,7 @@
 - name: "include {{ ansible_os_family }} vars"
   include_vars:
-    file: "{{ ansible_os_family }}"
-
-- name: "include tasks for setup on {{ ansible_os_family }}"
-  include_tasks: 
     file: "{{ ansible_os_family }}.yml"
 
-- name: install awscli
+- name: "include tasks for setup on {{ ansible_os_family }}"
   include_tasks:
-    file: awscli.yml
+    file: "{{ ansible_os_family }}.yml"

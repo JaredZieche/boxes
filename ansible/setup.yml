@@ -1,3 +1,21 @@
 - name: set up vagrant host
   hosts: localhost
-  roles: setup
+  become: true
+  collections:
+    - pandemonium1986.k8s_toolbox
+  tasks:
+    - import_role:
+        name: setup
+    - import_role:
+        name: christiangda.awscli
+    - import_role:
+        name: minikube
+    - import_role:
+        name: kubectx
+    - import_role:
+        name: k9s
+    - import_role:
+        name: stern
+    - import_role:
+        name: helm
+

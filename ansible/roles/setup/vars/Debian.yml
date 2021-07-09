@@ -3,11 +3,7 @@ packages:
     - wget
     - git
     - tmux
-    - vim
-    - nvim
+    - neovim
     - python3
-    - boto3
     - jq
-    - yq
-    - sshpass
     - zsh
