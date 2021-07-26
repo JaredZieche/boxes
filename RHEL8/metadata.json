@@ -1,0 +1,62 @@
+{
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "root_setup.sh"
+      ],
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'"
+        }
+      }
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "setup.sh"
+      ]
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us <wait>",
+        "hostname={{ .Name }} <wait>",
+        "fb=false debconf/frontend=noninteractive <wait>",
+        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false <wait>",
+        "initrd=/install/initrd.gz -- <enter><wait>"
+      ],
+      "boot_wait": "4s",
+      "guest_os_type": "RedHat_64",
+      "iso_checksum": "md5:8c2a4f7524e841cfdfd4f742b534550d",
+      "iso_url": "rhel-8.4-x86_64-boot.iso",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "headless": false,
+      "virtualbox_version_file": ".vbox_version",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "2048"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ]
+    }
+  ],
+  "post-processors": ["vagrant"]
+}
