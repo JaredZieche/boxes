@@ -1,6 +1,6 @@
 #!/bin/bash
-echo ".cfg" >> .gitignore
-git clone --bare https://github.com/jaredzieche/dotfiles.git $HOME/.cfg
+echo ".cfg" >> $HOME/.gitignore
+git clone --bare https://${dotfiles_repo} $HOME/.cfg
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 config config --local status.showUntrackedFiles no
 config checkout

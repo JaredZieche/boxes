@@ -4,18 +4,31 @@
   collections:
     - pandemonium1986.k8s_toolbox
   tasks:
+    - debug:
+        msg: "{{ ansible_distribution_release }}"
+      tags: debug
+    - import_role:
+        name: geerlingguy.nodejs
+      tags: nodejs
     - import_role:
         name: setup
+      tags: setup
     - import_role:
         name: christiangda.awscli
+      tags: awscli
     - import_role:
         name: minikube
+      tags: minikube
     - import_role:
         name: kubectx
+      tags: kubectx
     - import_role:
         name: k9s
+      tags: k9s
     - import_role:
         name: stern
+      tags: stern
     - import_role:
         name: helm
+      tags: helm
 

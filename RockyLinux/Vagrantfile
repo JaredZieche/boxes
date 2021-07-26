@@ -78,5 +78,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "src/ansible/setup.yml"
   end
-  config.vm.provision "shell", path: "../../scripts/dotfiles.sh"
+  config.vm.provision "shell", path: "src/scripts/dotfiles.sh"
 end

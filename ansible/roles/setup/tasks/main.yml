@@ -5,3 +5,9 @@
 - name: "include tasks for setup on {{ ansible_os_family }}"
   include_tasks:
     file: "{{ ansible_os_family }}.yml"
+
+- name: "Install CA certificates"
+  get_url:
+    dest: "{{ cert destination }}"
+    url: "{{ item }}"
+  loop: "{{ ca_certs }}"

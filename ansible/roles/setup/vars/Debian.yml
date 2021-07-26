@@ -1,3 +1,9 @@
+repos:
+  - name:
+    baseurl: "https://apt.releases.hashicorp.com {{ ansible_distribution_version }} main"
+    gpgkey: "https://apt.releases.hashicorp.com/gpg"
+apt_keys:
+  - name:
 packages:
     - curl
     - wget

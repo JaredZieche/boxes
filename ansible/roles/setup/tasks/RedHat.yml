@@ -9,5 +9,5 @@
 - name: install required packages
   yum:
     state: latest
-    name: "{{ yum.packages }}"
-    enablerepo: "{{ yum_repos }}"
+    name: "{{ packages }}"
+    enablerepo: "{{ repos }}"

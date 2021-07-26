@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget -P /usr/share/ca-certificates/ \
+wget -P $HOME/ /usr/local/share/ca-certificates/ \
 http://crl.pki.va.gov/PKI/AIA/VA/VA-Internal-S2-ICA1-v1.cer \
 http://aia.pki.va.gov/PKI/AIA/VA/VA-Internal-S2-ICA4.cer \
 http://aia.pki.va.gov/PKI/AIA/VA/VA-Internal-S2-ICA5.cer \
@@ -12,4 +12,8 @@ http://aia.pki.va.gov/PKI/AIA/FederalPKI/FedCPG2SHA384.crt \
 http://aia.pki.va.gov/PKI/AIA/SSP/VerizonA2SHA384.cer \
 http://aia.pki.va.gov/PKI/AIA/SSP/TreasuryCASHA384.cer \
 http://aia.pki.va.gov/PKI/AIA/SSP/EntrustCASHA384.cer \
+
+for x in $(ls /usr/local/share/ca-certificates | grep .cer)
+  do openssl x509 -inform DER -in $x -out /usr/local/share/ca-certificates/$x.crt
+done
 update-ca-certificates

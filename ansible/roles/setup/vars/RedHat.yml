@@ -1,4 +1,4 @@
-yum_repos:
+repos:
   - name: kubernetes
     baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
     gpgkey:
@@ -6,27 +6,20 @@ yum_repos:
       - "https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
   - name: hashicorp
     baseurl: "https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo"
-    gpgkey: 
   - name: epel
     baseurl: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
     gpgkey:
-yum_packages:
+packages:
+    - docker
     - curl
     - wget
     - git
     - tmux
-    - firefox
-    - xvfb
     - vim
-    - nvim
-    - yum-utils
-    - kubectl
-    - helm3
-    - packer
-    - terraform
-    - vault
-    - awscli
+    - neovim
     - python3
     - boto3
+    - botocore
     - jq
     - yq
+    - zsh
