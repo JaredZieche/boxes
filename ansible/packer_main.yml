@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - role: geerlingguy.nfs
+
+    - role: packerizer
+
+  tasks:
+    - name: Install debian utilities.
+      apt:
+        name:
+          - git
+          - wget
+          - curl
+          - vim
+        state: present
+      when: ansible_os_family == 'Debian'

@@ -1,12 +1,12 @@
-#!/bin/bash
-set -e
-echo "Installing for rof"
-# Installing vagrant keys
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-cd ~/.ssh
-wget --no-check-certificate 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub' -O authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-chown -R vagrant ~/.ssh
-# Install Ansible
-yum install ansible -y
+#!/bin/bash -eux
+# Install Python.
+# Add the EPEL repository, and install Ansible.
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf -y install python-setuptools
+dnf -y install python3 python3-pip
+alternatives --set python /usr/bin/python3
+# Upgrade Pip.
+export REQUESTS_CA_BUNDLE='/etc/pki/tls/certs/ca-bundle.crt'
+python -m pip install -U pip
+# Install Ansible.
+python -m pip install ansible

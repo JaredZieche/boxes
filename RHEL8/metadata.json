@@ -1,46 +1,47 @@
 {
+  "variables": {
+    "version": ""
+  },
   "provisioners": [
     {
       "type": "shell",
-      "scripts": [
-        "root_setup.sh"
-      ],
-      "override": {
-        "virtualbox-iso": {
-          "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'"
-        }
-      }
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "setup.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "../shared/main.yml",
+      "galaxy_file": "../shared/requirements.yml",
+      "role_paths": [ "../shared/roles/ansible-role-packer_rhel" ]
     },
     {
       "type": "shell",
-      "scripts": [
-        "setup.sh"
-      ]
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "cleanup.sh"
     }
   ],
   "builders": [
     {
       "type": "virtualbox-iso",
       "boot_command": [
-        "<esc><esc><enter><wait>",
-        "/install/vmlinuz noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
-        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us <wait>",
-        "hostname={{ .Name }} <wait>",
-        "fb=false debconf/frontend=noninteractive <wait>",
-        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false <wait>",
-        "initrd=/install/initrd.gz -- <enter><wait>"
+        "<up><wait><tab><wait> text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstarter.cfg<enter><wait5>"
       ],
+      "http_port_min": "8000",
+      "http_port_max": "8000",
       "boot_wait": "4s",
       "guest_os_type": "RedHat_64",
-      "iso_checksum": "md5:8c2a4f7524e841cfdfd4f742b534550d",
-      "iso_url": "rhel-8.4-x86_64-boot.iso",
+      "http_directory": "http",
+      "iso_checksum": "sha256:48f955712454c32718dcde858dea5aca574376a1d7a4b0ed6908ac0b85597811",
+      "iso_urls": [
+          "rhel-8.4-x86_64-dvd.iso"
+      ],
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_wait_timeout": "10000s",
-      "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
+      "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "headless": false,
+      "headless": true,
       "virtualbox_version_file": ".vbox_version",
       "vboxmanage": [
         [
@@ -58,5 +59,12 @@
       ]
     }
   ],
-  "post-processors": ["vagrant"]
+  "post-processors": [
+  [
+    {
+      "output": "builds/{{.Provider}}-rhel8.box",
+      "type": "vagrant"
+    }
+  ]
+]
 }
