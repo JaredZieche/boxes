@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "builds/virtualbox-rhel8.box"
   config.vm.box_url = vagrant_config['box_url']
   config.ssh.password = "vagrant"
+  config.vm.synced_folder "shared/ansible/roles/", "/vagrant/shared/ansible/roles", disabled: true
   # VirtualBox.
   config.vm.define "virtualbox" do |virtualbox|
     virtualbox.vm.hostname = "virtualbox-rhel8"
