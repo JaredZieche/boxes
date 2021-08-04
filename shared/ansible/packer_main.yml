@@ -6,7 +6,7 @@
   roles:
     - role: geerlingguy.nfs
 
-    - role: packerizer
+    - role: jaredzieche.packerizer
 
   tasks:
     - name: Install debian utilities.

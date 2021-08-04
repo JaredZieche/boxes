@@ -1,0 +1,51 @@
+---
+- name: set up vagrant host
+  hosts: localhost
+  become: true
+  collections:
+    - pandemonium1986.k8s_toolbox
+  tasks:
+    - debug:
+        msg: "{{ ansible_distribution_release }}"
+      tags: debug
+
+    - name: "Add a local user"
+      user:
+        generate_ssh_key: yes
+        group: "{{ username }}" 
+        name: "{{ username }}"
+
+    - name: "Allow {{ username }} group to have passwordless sudo"
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%{{ username }}'
+        line: '%{{ username }} ALL=(ALL) NOPASSWD: ALL'
+        validate: visudo -cf %s
+
+    - import_role:
+        name: jaredzieche.sshuttle
+      vars:
+        sshuttle_user: "{{ username }}"
+        sshuttle_group: "{{ username }}"
+    - import_role:
+        name: geerlingguy.nodejs
+      tags: nodejs
+    - import_role:
+        name: christiangda.awscli
+      tags: awscli
+    - import_role:
+        name: minikube
+      tags: minikube
+    - import_role:
+        name: kubectx
+      tags: kubectx
+    - import_role:
+        name: k9s
+      tags: k9s
+    - import_role:
+        name: stern
+      tags: stern
+    - import_role:
+        name: helm
+      tags: helm

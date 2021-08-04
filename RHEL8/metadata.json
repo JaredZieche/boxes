@@ -10,9 +10,8 @@
     },
     {
       "type": "ansible-local",
-      "playbook_file": "../shared/main.yml",
-      "galaxy_file": "../shared/requirements.yml",
-      "role_paths": [ "../shared/roles/ansible-role-packer_rhel" ]
+      "playbook_file": "../shared/ansible/packer_main.yml",
+      "galaxy_file": "../shared/ansible/packer_requirements.yml"
     },
     {
       "type": "shell",

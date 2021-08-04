@@ -1,0 +1,7 @@
+roles:
+  - src: geerlingguy.nodejs
+  - src: avanov.pyenv
+  - src: jaredzieche.sshuttle
+  - src: christiangda.awscli
+collections:
+  - pandemonium1986.k8s_toolbox

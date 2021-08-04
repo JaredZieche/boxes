@@ -1,6 +1,7 @@
 #!/bin/bash -eux
 
 # Remove Ansible and its dependencies.
+export REQUESTS_CA_BUNDLE='/etc/pki/tls/certs/ca-bundle.crt'
 pip3 install pip-autoremove
 ln -s /usr/bin/pip3 /usr/bin/pip
 /usr/local/bin/pip-autoremove ansible -y
