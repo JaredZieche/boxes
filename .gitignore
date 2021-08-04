@@ -3,3 +3,4 @@
 *.box
 *.iso
 builds/*
+vagrant_config.yaml

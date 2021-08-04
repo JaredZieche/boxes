@@ -1,15 +1,21 @@
 ---
 - name: set up vagrant host
-  hosts: localhost
+  hosts: all
   become: true
   collections:
     - pandemonium1986.k8s_toolbox
+  environment:
+    REQUESTS_CA_BUNDLE: '/etc/pki/tls/certs/ca-bundle.crt'
   tasks:
     - debug:
         msg: "{{ ansible_distribution_release }}"
       tags: debug
 
-    - name: "Add a local user"
+    - name: "Add {{ username }} group"
+      group:
+        name: "{{ username }}"
+
+    - name: "Add {{ username }} user"
       user:
         generate_ssh_key: yes
         group: "{{ username }}" 
