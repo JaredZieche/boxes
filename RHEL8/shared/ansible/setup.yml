@@ -1,4 +1,0 @@
-- name: set up vagrant host
-  hosts: localhost
-  become: true
-  tasks:

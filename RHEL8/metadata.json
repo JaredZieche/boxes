@@ -10,8 +10,8 @@
     },
     {
       "type": "ansible-local",
-      "playbook_file": "../shared/ansible/packer_main.yml",
-      "galaxy_file": "../shared/ansible/packer_requirements.yml"
+      "playbook_file": "ansible/packer_main.yml",
+      "galaxy_file": "ansible/packer_requirements.yml"
     },
     {
       "type": "shell",

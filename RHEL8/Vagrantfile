@@ -12,7 +12,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "builds/virtualbox-rhel8.box"
   config.vm.box_url = vagrant_config['box_url']
   config.ssh.password = "vagrant"
-  config.vm.synced_folder "shared/ansible/roles/", "/vagrant/shared/ansible/roles", disabled: true
+  config.vm.synced_folder "ansible/roles/", "vagrant/ansible/roles", disabled: true
+  config.vm.synced_folder "scripts/", "vagrant/scripts", disabled: true
   # VirtualBox.
   config.vm.define "virtualbox" do |virtualbox|
     virtualbox.vm.hostname = "virtualbox-rhel8"
@@ -29,8 +30,8 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: "echo Hello, World"
     config.vm.provision "shell", path: "setup.sh"
     config.vm.provision "ansible_local" do |ansible|
-      ansible.playbook = "shared/ansible/vagrant_main.yml"
-      ansible.galaxy_role_file = "shared/ansible/vagrant_requirements.yml"
+      ansible.playbook = "ansible/vagrant_main.yml"
+      ansible.galaxy_role_file = "ansible/vagrant_requirements.yml"
       ansible.galaxy_command = "ansible-galaxy install --role-file=%{role_file} --force"
       ansible.extra_vars = {
         username: vagrant_config['username'],
