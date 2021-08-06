@@ -33,7 +33,10 @@ Vagrant.configure("2") do |config|
       ansible.galaxy_role_file = "shared/ansible/vagrant_requirements.yml"
       ansible.galaxy_command = "ansible-galaxy install --role-file=%{role_file} --force"
       ansible.extra_vars = {
-        username: vagrant_config['username']
+        username: vagrant_config['username'],
+        sshuttle_hosts: vagrant_config['sshuttle_hosts'],
+        packages: vagrant_config['packages'],
+        repos: vagrant_config['repos']
       }
     end
   end

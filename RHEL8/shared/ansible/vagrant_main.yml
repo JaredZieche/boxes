@@ -29,6 +29,17 @@
         line: '%{{ username }} ALL=(ALL) NOPASSWD: ALL'
         validate: visudo -cf %s
 
+    # - name: "Add repos"
+    #   yum_repository:
+    #     name: "{{ item.name }}"
+    #     baseurl: "{{ item.baseurl }}"
+    #     description: "{{ item.description }}"
+    #   loop: "{{ repos }}"
+
+    - name: "Add all the packages"
+      dnf:
+        name: "{{ packages }}"
+
     - import_role:
         name: jaredzieche.sshuttle
       vars:
